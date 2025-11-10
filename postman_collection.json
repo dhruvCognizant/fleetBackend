@@ -1,0 +1,30 @@
+{
+  "info": {
+    "name": "Fleet API",
+    "_postman_id": "00000000-0000-0000-0000-000000000000",
+    "description": "Basic collection for testing auth and protected routes",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Login (admin)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@admin.com\",\n  \"password\": \"adminPass\"\n}"
+        },
+        "url": { "raw": "http://localhost:5000/auth/login", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["auth","login"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": { "exec": ["const sc = pm.response.headers.get('set-cookie');", "if (sc) { const m = sc.match(/token=([^;]+)/); if (m) pm.environment.set('token', m[1]); }" ], "type": "text/javascript" }
+        }
+      ]
+    }
+  ]
+}
